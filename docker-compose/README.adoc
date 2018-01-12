@@ -1,0 +1,38 @@
+= Environment
+
+== DNS
+
+The environment provides a Docker container, which provides a DNS server at port 53 for name resolution of Docker containers.
+The scripts `./dns-enable.sh` adds a server entry to the `dnsmasq` service of `NetworkManager`.
+This only works, if the host has the `NetworkManager` service installed with `dnsmasq` enabled. In addition the `dnsmasq` service must be installed but disabled.
+
+./etc/NetworkManager/NetworkManager.conf
+----
+[main]
+dns=dnsmasq
+----
+
+With this configuration `NetworkManager` will automatically start `dnsmasq` and add 127.0.0.1 to `/etc/resolv.conf`.
+
+|=======================================================================================
+| Manual for NetworkManager and Dnsmasq | https://wiki.archlinux.org/index.php/dnsmasq
+|=======================================================================================
+
+With DNS enabled Docker containers can be accessed by their name, e.g.
+
+    dig consul.uas.nt
+
+Additionally services registered at consul can be accessed by their name too, e.g.
+
+    dig consul.service.uas.nt
+
+== Infrastructure
+
+=== Consul
+
+Consul is the service discovery of this environment.
+
+|=======================================================================================
+| WebUI | http://consul.uas.nt:8500/ui/
+| DNS   | consul.uas.nt:8600
+|=======================================================================================
