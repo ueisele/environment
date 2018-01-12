@@ -1,5 +1,17 @@
 = Environment
 
+The environment can be started with
+
+    ./up-infra.sh
+
+Get the IP addresses of the containers with
+
+    ./ips.sh
+
+Destroy the environment with
+
+    ./down.sh
+
 == DNS
 
 The environment provides a Docker container, which provides a DNS server at port 53 for name resolution of Docker containers.

@@ -1,3 +1,7 @@
 = Environment
 
 The platform for the ntuas services.
+
+== Docker-Compose
+
+The platform is provided by a docker-compose setup. Read more at link:docker-compose/README.adoc[docker-compose/README.adoc]
