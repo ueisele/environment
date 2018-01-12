@@ -1,0 +1,19 @@
+---
+version: '3.4'
+
+services:
+  consul:
+    image: consul
+    restart: unless-stopped
+    environment:
+      SERVICE_IGNORE: 'true'
+      CONSUL_BIND_INTERFACE: 'eth0'
+      CONSUL_LOCAL_CONFIG: '{ "ui": true,  "domain": "${CONSUL_DOMAIN_NAME}"}'
+    networks:
+      default:
+        aliases:
+          - consul.${DOMAIN_NAME}
+
+networks:
+  default:
+...

@@ -1,0 +1,16 @@
+---
+version: '3.4'
+
+services:
+  toolclinet:
+    build: ./tool/cli/net
+    image: tool-cli-net
+
+  dns:
+    image: andyshinn/dnsmasq
+    restart: unless-stopped
+    command: -d
+
+networks:
+  default:
+...
