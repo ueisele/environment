@@ -5,8 +5,14 @@ services:
   consul:
     image: consul
     restart: unless-stopped
+    hostname: consul
     labels:
-      SERVICE_IGNORE: 'true'
+      SERVICE_8300_NAME: "consul"
+      SERVICE_8301_IGNORE: "true"
+      SERVICE_8302_IGNORE: "true"
+      SERVICE_8500_NAME: "consul-http"
+      SERVICE_8500_TAGS: "traefik.enable=true"
+      SERVICE_8600_NAME: "consul-dns"
     environment:
       CONSUL_BIND_INTERFACE: 'eth0'
       CONSUL_LOCAL_CONFIG: '{ "ui": true,  "domain": "${CONSUL_DOMAIN_NAME}"}'
@@ -27,8 +33,15 @@ services:
   traefik:
     image: traefik
     restart: unless-stopped
+    hostname: traefik
+    labels:
+      SERVICE_80_NAME: "traefik"
+      SERVICE_8080_NAME: "traefik-http"
+      SERVICE_8080_TAGS: "traefik.enable=true"
     volumes:
       - ./volume/infra/traefik/etc/traefik.toml:/etc/traefik/traefik.toml
+    expose:
+      - "8080"
     networks:
       default:
         aliases:
@@ -37,6 +50,7 @@ services:
   nexus3:
     image: sonatype/nexus3
     restart: unless-stopped
+    hostname: nexus3
     labels:
       SERVICE_TAGS: "traefik.enable=true"
     volumes:
@@ -45,6 +59,47 @@ services:
       default:
         aliases:
           - nexus3.${DOMAIN_NAME}
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    hostname: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${PROJECT_NAME}
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbuser
+    volumes:
+      - /var/lib/mysql
+    networks:
+      default:
+        aliases:
+          - mysql.${DOMAIN_NAME}
+
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    restart: unless-stopped
+    hostname: rabbitmq
+    labels:
+      SERVICE_4369_IGNORE: "true"
+      SERVICE_5671_IGNORE: "true"
+      SERVICE_5672_NAME: "rabbitmq"
+      SERVICE_15671_IGNORE: "true"
+      SERVICE_15672_NAME: "rabbitmq-http"
+      SERVICE_15672_TAGS: "traefik.enable=true"
+      SERVICE_25672_IGNORE: "true"
+    environment:
+      RABBITMQ_NODENAME: rabbit
+      RABBITMQ_ERLANG_COOKIE: ${PROJECT_NAME}
+      RABBITMQ_DEFAULT_USER: mquser
+      RABBITMQ_DEFAULT_PASS: mquser
+      RABBITMQ_DEFAULT_VHOST: ${PROJECT_NAME}
+    volumes:
+      - /var/lib/rabbitmq
+    networks:
+      default:
+        aliases:
+          - rabbitmq.${DOMAIN_NAME}
 
 networks:
   default:

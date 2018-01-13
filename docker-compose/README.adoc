@@ -51,8 +51,8 @@ Consul is the service discovery of this environment.
 
 |=======================================================================================
 | WebUI         | http://consul.uas.nt:8500/ui/
-| WebUI Consul  | http://consul.service.uas.nt.consul:8500/ui/
-| WebUI Traefik | http://consul.uas.nt.public/ui/
+| WebUI Consul  | http://consul-http.service.uas.nt.consul:8500/ui/
+| WebUI Traefik | http://consul-http.uas.nt.public/ui/
 | DNS           | consul.uas.nt:8600
 |=======================================================================================
 
@@ -75,8 +75,8 @@ The public domain is `uas.nt.public`.
 
 |=======================================================================================
 | WebUI         | http://traefik.uas.nt:8080/ui/
-| WebUI Consul  | http://traefik.service.uas.nt.consul:8080/
-| WebUI Traefik | http://traefik.uas.nt.public/
+| WebUI Consul  | http://traefik-http.service.uas.nt.consul:8080/
+| WebUI Traefik | http://traefik-http.uas.nt.public/
 |=======================================================================================
 
 If you have not enabled DNS, Traefik can be tested by manually defining the _Host_ attribute in a request.
@@ -93,4 +93,43 @@ The credentials are: `admin` / `admin123`
 | WebUI         | http://nexus3.uas.nt:8081/
 | WebUI Consul  | http://nexus3.service.uas.nt.consul:8081/
 | WebUI Traefik | http://nexus3.uas.nt.public/
+|=======================================================================================
+
+=== MySQL
+
+MySQL is used as database for the services.
+
+|=======================================================================================
+| RPC        | mysql.uas.nt:3306
+| RPC Consul | mysql.service.uas.nt.consul:3306
+|=======================================================================================
+
+Credentials:
+|=======================================================================================
+| Root User     | root
+| Root Password | root
+| DB User       | dbuser
+| DB Password   | dbuser
+| Database      | uasnt
+|=======================================================================================
+
+=== RabbitMQ
+
+RabbitMQ is the messaging broker for the services.
+
+|=======================================================================================
+| RPC           | rabbitmq.uas.nt:5672
+| RPC Consul    | rabbitmq.service.uas.nt.consul:5672
+| WebUI         | http://rabbitmq.uas.nt:15672
+| WebUI Consul  | http://rabbitmq-http.service.uas.nt.consul:15672
+| WebUI Traefik | http://rabbitmq-http.uas.nt.public
+|=======================================================================================
+
+Credentials:
+|=======================================================================================
+| User          | mquser
+| Password      | mquser
+| Virtual Host  | uasnt
+| Erlang Cookie | uasnt
+| Node          | rabbit@rabbitmq
 |=======================================================================================

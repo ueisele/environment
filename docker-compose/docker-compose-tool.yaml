@@ -8,6 +8,13 @@ services:
     labels:
       SERVICE_IGNORE: 'true'
 
+  toolclirabbitmq:
+    image: rabbitmq:3.7-management
+    labels:
+      SERVICE_IGNORE: 'true'
+    environment:
+      RABBITMQ_ERLANG_COOKIE: ${PROJECT_NAME}
+
   dns:
     image: andyshinn/dnsmasq
     restart: unless-stopped
