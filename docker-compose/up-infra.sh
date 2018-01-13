@@ -7,6 +7,13 @@ popd > /dev/null
 
 function main () {
     start_service "consul"
+    start_service "consul-registrator"
+
+    start_service "traefik"
+
+    mkdir -p ./volume/infra/nexus3/data
+    chmod go+w ./volume/infra/nexus3/data
+    start_service "nexus3"
 }
 
 function start_service () {

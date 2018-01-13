@@ -5,14 +5,46 @@ services:
   consul:
     image: consul
     restart: unless-stopped
-    environment:
+    labels:
       SERVICE_IGNORE: 'true'
+    environment:
       CONSUL_BIND_INTERFACE: 'eth0'
       CONSUL_LOCAL_CONFIG: '{ "ui": true,  "domain": "${CONSUL_DOMAIN_NAME}"}'
     networks:
       default:
         aliases:
           - consul.${DOMAIN_NAME}
+
+  consul-registrator:
+    image: gliderlabs/registrator
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: ["-internal", "consul://consul:8500"]
+    networks:
+      default:
+
+  traefik:
+    image: traefik
+    restart: unless-stopped
+    volumes:
+      - ./volume/infra/traefik/etc/traefik.toml:/etc/traefik/traefik.toml
+    networks:
+      default:
+        aliases:
+          - traefik.${DOMAIN_NAME}
+
+  nexus3:
+    image: sonatype/nexus3
+    restart: unless-stopped
+    labels:
+      SERVICE_TAGS: "traefik.enable=true"
+    volumes:
+      - ./volume/infra/nexus3/data:/nexus-data
+    networks:
+      default:
+        aliases:
+          - nexus3.${DOMAIN_NAME}
 
 networks:
   default:

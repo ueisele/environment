@@ -36,7 +36,12 @@ With DNS enabled Docker containers can be accessed by their name, e.g.
 
 Additionally services registered at consul can be accessed by their name too, e.g.
 
-    dig consul.service.uas.nt
+    dig consul.service.uas.nt.consul
+
+This also enables name resolution of services published by Traefik, e.g
+
+   dig consul.uas.nt.public
+
 
 == Infrastructure
 
@@ -45,6 +50,47 @@ Additionally services registered at consul can be accessed by their name too, e.
 Consul is the service discovery of this environment.
 
 |=======================================================================================
-| WebUI | http://consul.uas.nt:8500/ui/
-| DNS   | consul.uas.nt:8600
+| WebUI         | http://consul.uas.nt:8500/ui/
+| WebUI Consul  | http://consul.service.uas.nt.consul:8500/ui/
+| WebUI Traefik | http://consul.uas.nt.public/ui/
+| DNS           | consul.uas.nt:8600
+|=======================================================================================
+
+The Consul domain is `uas.nt.consul`.
+
+=== Consul Registrator
+
+The Consul registrator registers Docker containers as service at Consul.
+
+If a Docker container must not be registered at Consul the label `SERVICE_IGNORE=true` must be defined.
+
+For more details about customizing service registration see http://gliderlabs.github.io/registrator/latest/user/services/.
+
+=== Traefik
+
+Traefik is the public service facade and load balancer. Basically it is a HTTP reverse proxy.
+What it distinguishes is the ability to automatically publish services registered at Consul.
+
+The public domain is `uas.nt.public`.
+
+|=======================================================================================
+| WebUI         | http://traefik.uas.nt:8080/ui/
+| WebUI Consul  | http://traefik.service.uas.nt.consul:8080/
+| WebUI Traefik | http://traefik.uas.nt.public/
+|=======================================================================================
+
+If you have not enabled DNS, Traefik can be tested by manually defining the _Host_ attribute in a request.
+
+    curl --header 'Host: nexus3.uas.nt.public' http://<<traefik_container_ip>>:80
+
+=== Nexus3
+
+Nexus 3 is the artifact repository of this environment.
+
+The credentials are: `admin` / `admin123`
+
+|=======================================================================================
+| WebUI         | http://nexus3.uas.nt:8081/
+| WebUI Consul  | http://nexus3.service.uas.nt.consul:8081/
+| WebUI Traefik | http://nexus3.uas.nt.public/
 |=======================================================================================

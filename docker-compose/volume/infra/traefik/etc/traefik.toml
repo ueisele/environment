@@ -1,0 +1,60 @@
+################################################################
+# Global configuration
+################################################################
+
+defaultEntryPoints = ["http"]
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+
+[retry]
+
+[healthcheck]
+interval = "15s"
+
+################################################################
+# Web configuration backend
+################################################################
+
+[web]
+address = ":8080"
+
+[web.metrics.prometheus]
+
+################################################################
+# Consul Catalog configuration backend
+################################################################
+
+[consulCatalog]
+endpoint = "consul:8500"
+domain = "uas.nt.public"
+prefix = "traefik"
+exposedByDefault = false
+watch = true
+
+################################################################
+# Static configuration backend
+################################################################
+
+[file]
+
+[backends]
+  [backends.backend-traefik]
+    [backends.backend-traefik.servers.traefik]
+    url = "http://traefik:8080"
+  [backends.backend-consul]
+    [backends.backend-consul.servers.consul]
+    url = "http://consul:8500"
+
+[frontends]
+  [frontends.frontend-traefik]
+  backend = "backend-traefik"
+  passHostHeader = true
+    [frontends.frontend-traefik.routes.route-host-traefik]
+    rule = "Host:traefik.uas.nt.public"
+  [frontends.frontend-consul]
+  backend = "backend-consul"
+  passHostHeader = true
+    [frontends.frontend-consul.routes.route-host-consul]
+    rule = "Host:consul.uas.nt.public"

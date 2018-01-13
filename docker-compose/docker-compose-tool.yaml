@@ -3,13 +3,17 @@ version: '3.4'
 
 services:
   toolclinet:
-    build: ./tool/cli/net
+    build: ./image/tool/cli/net
     image: tool-cli-net
+    labels:
+      SERVICE_IGNORE: 'true'
 
   dns:
     image: andyshinn/dnsmasq
     restart: unless-stopped
     command: -d
+    labels:
+      SERVICE_IGNORE: 'true'
 
 networks:
   default:
