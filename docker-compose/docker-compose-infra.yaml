@@ -52,9 +52,15 @@ services:
     restart: unless-stopped
     hostname: nexus3
     labels:
-      SERVICE_TAGS: "traefik.enable=true"
+      SERVICE_8081_NAME: "nexus3"
+      SERVICE_8081_TAGS: "traefik.enable=true"
+      SERVICE_8082_NAME: "dockerregistry"
+      SERVICE_8082_TAGS: "traefik.enable=true"
     volumes:
       - ./volume/infra/nexus3/data:/nexus-data
+    expose:
+      - "8081"
+      - "8082"
     networks:
       default:
         aliases:

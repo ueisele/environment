@@ -90,10 +90,26 @@ Nexus 3 is the artifact repository of this environment.
 The credentials are: `admin` / `admin123`
 
 |=======================================================================================
-| WebUI         | http://nexus3.uas.nt:8081/
-| WebUI Consul  | http://nexus3.service.uas.nt.consul:8081/
-| WebUI Traefik | http://nexus3.uas.nt.public/
+| WebUI                   | http://nexus3.uas.nt:8081/
+| WebUI Consul            | http://nexus3.service.uas.nt.consul:8081/
+| WebUI Traefik           | http://nexus3.uas.nt.public/
+| Docker Registry Traefik | http://dockerregistry.uas.nt.public
 |=======================================================================================
+
+To publish to the Nexus3 Docker registry you must add the following to `/etc/docker/daemon.json` and restart the Docker service.
+
+    { "insecure-registries":["dockerregistry.uas.nt.public"] }
+
+After login to the Docker registry.
+
+    docker login -u admin -p admin123 dockerregistry.uas.nt.public
+
+ToDo:
+
+* Scripted Setup of Nexus3: https://github.com/shelleg/ansible-nexus3-oss
+** Register Groovy Script: https://github.com/shelleg/ansible-nexus3-oss/blob/master/tasks/declare_script_each.yml
+** Create Docker Registry: https://github.com/shelleg/ansible-nexus3-oss/blob/master/defaults/main.yml
+
 
 === MySQL
 
