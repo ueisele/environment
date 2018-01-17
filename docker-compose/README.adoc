@@ -109,7 +109,7 @@ ToDo:
 * Scripted Setup of Nexus3: https://github.com/shelleg/ansible-nexus3-oss
 ** Register Groovy Script: https://github.com/shelleg/ansible-nexus3-oss/blob/master/tasks/declare_script_each.yml
 ** Create Docker Registry: https://github.com/shelleg/ansible-nexus3-oss/blob/master/defaults/main.yml
-
+** Scripting Reference: https://books.sonatype.com/nexus-book/3.0/reference/scripting.html
 
 === MySQL
 
