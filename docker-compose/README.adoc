@@ -104,6 +104,24 @@ After login to the Docker registry.
 
     docker login -u admin -p admin123 dockerregistry.uas.nt.public
 
+In order to publish to the maven-releases repository, the server credentials must be added to the `~/.m2/settings,xml` file.
+
+.~/.m2/settings.xml
+[source,xml]
+----
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+<servers>
+  <server>
+    <id>uasnt-maven-releases</id>
+    <username>admin</username>
+    <password>admin123</password>
+  </server>
+</servers>
+</settings>
+----
+
 ToDo:
 
 * Scripted Setup of Nexus3: https://github.com/shelleg/ansible-nexus3-oss
