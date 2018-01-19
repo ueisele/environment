@@ -16,6 +16,8 @@ services:
     environment:
       CONSUL_BIND_INTERFACE: 'eth0'
       CONSUL_LOCAL_CONFIG: '{ "ui": true,  "domain": "${CONSUL_DOMAIN_NAME}"}'
+    ports:
+      - 8500:8500
     networks:
       default:
         aliases:
@@ -73,8 +75,6 @@ services:
       MYSQL_DATABASE: ${PROJECT_NAME}
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: dbuser
-    volumes:
-      - /var/lib/mysql
     networks:
       default:
         aliases:
@@ -98,8 +98,6 @@ services:
       RABBITMQ_DEFAULT_USER: mquser
       RABBITMQ_DEFAULT_PASS: mquser
       RABBITMQ_DEFAULT_VHOST: ${PROJECT_NAME}
-    volumes:
-      - /var/lib/rabbitmq
     networks:
       default:
         aliases:
