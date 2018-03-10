@@ -144,7 +144,7 @@ Credentials:
 | Root Password | root
 | DB User       | dbuser
 | DB Password   | dbuser
-| Database      | uasnt
+| Database      | iactargetdev
 |=======================================================================================
 
 === RabbitMQ
@@ -163,7 +163,7 @@ Credentials:
 |=======================================================================================
 | User          | mquser
 | Password      | mquser
-| Virtual Host  | uasnt
-| Erlang Cookie | uasnt
+| Virtual Host  | iactargetdev
+| Erlang Cookie | iactargetdev
 | Node          | rabbit@rabbitmq
 |=======================================================================================
