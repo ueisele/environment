@@ -1,6 +1,6 @@
-= Environment
+= Development Environment
 
-The platform for the ntuas services.
+The platform for local development environment.
 
 == Docker-Compose
 

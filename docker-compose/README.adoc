@@ -32,15 +32,15 @@ With this configuration `NetworkManager` will automatically start `dnsmasq` and 
 
 With DNS enabled Docker containers can be accessed by their name, e.g.
 
-    dig consul.uas.nt
+    dig consul.iac.target.dev
 
 Additionally services registered at consul can be accessed by their name too, e.g.
 
-    dig consul.service.uas.nt.consul
+    dig consul.service.iac.target.dev.consul
 
 This also enables name resolution of services published by Traefik, e.g
 
-   dig consul.uas.nt.public
+   dig consul.iac.target.dev.public
 
 
 == Infrastructure
@@ -50,13 +50,13 @@ This also enables name resolution of services published by Traefik, e.g
 Consul is the service discovery of this environment.
 
 |=======================================================================================
-| WebUI         | http://consul.uas.nt:8500/ui/
-| WebUI Consul  | http://consul-http.service.uas.nt.consul:8500/ui/
-| WebUI Traefik | http://consul-http.uas.nt.public/ui/
-| DNS           | consul.uas.nt:8600
+| WebUI         | http://consul.iac.target.dev:8500/ui/
+| WebUI Consul  | http://consul-http.service.iac.target.dev.consul:8500/ui/
+| WebUI Traefik | http://consul-http.iac.target.dev.public/ui/
+| DNS           | consul.iac.target.dev:8600
 |=======================================================================================
 
-The Consul domain is `uas.nt.consul`.
+The Consul domain is `iac.target.dev.consul`.
 
 === Consul Registrator
 
@@ -71,17 +71,17 @@ For more details about customizing service registration see http://gliderlabs.gi
 Traefik is the public service facade and load balancer. Basically it is a HTTP reverse proxy.
 What it distinguishes is the ability to automatically publish services registered at Consul.
 
-The public domain is `uas.nt.public`.
+The public domain is `iac.target.dev.public`.
 
 |=======================================================================================
-| WebUI         | http://traefik.uas.nt:8080/ui/
-| WebUI Consul  | http://traefik-http.service.uas.nt.consul:8080/
-| WebUI Traefik | http://traefik-http.uas.nt.public/
+| WebUI         | http://traefik.iac.target.dev:8080/ui/
+| WebUI Consul  | http://traefik-http.service.iac.target.dev.consul:8080/
+| WebUI Traefik | http://traefik-http.iac.target.dev.public/
 |=======================================================================================
 
 If you have not enabled DNS, Traefik can be tested by manually defining the _Host_ attribute in a request.
 
-    curl --header 'Host: nexus3.uas.nt.public' http://<<traefik_container_ip>>:80
+    curl --header 'Host: nexus3.iac.target.dev.public' http://<<traefik_container_ip>>:80
 
 === Nexus3
 
@@ -90,19 +90,19 @@ Nexus 3 is the artifact repository of this environment.
 The credentials are: `admin` / `admin123`
 
 |=======================================================================================
-| WebUI                   | http://nexus3.uas.nt:8081/
-| WebUI Consul            | http://nexus3.service.uas.nt.consul:8081/
-| WebUI Traefik           | http://nexus3.uas.nt.public/
-| Docker Registry Traefik | http://dockerregistry.uas.nt.public
+| WebUI                   | http://nexus3.iac.target.dev:8081/
+| WebUI Consul            | http://nexus3.service.iac.target.dev.consul:8081/
+| WebUI Traefik           | http://nexus3.iac.target.dev.public/
+| Docker Registry Traefik | http://dockerregistry.iac.target.dev.public
 |=======================================================================================
 
 To publish to the Nexus3 Docker registry you must add the following to `/etc/docker/daemon.json` and restart the Docker service.
 
-    { "insecure-registries":["dockerregistry.uas.nt.public"] }
+    { "insecure-registries":["dockerregistry.iac.target.dev.public"] }
 
 After login to the Docker registry.
 
-    docker login -u admin -p admin123 dockerregistry.uas.nt.public
+    docker login -u admin -p admin123 dockerregistry.iac.target.dev.public
 
 In order to publish to the maven-releases repository, the server credentials must be added to the `~/.m2/settings,xml` file.
 
@@ -134,8 +134,8 @@ ToDo:
 MySQL is used as database for the services.
 
 |=======================================================================================
-| RPC        | mysql.uas.nt:3306
-| RPC Consul | mysql.service.uas.nt.consul:3306
+| RPC        | mysql.iac.target.dev:3306
+| RPC Consul | mysql.service.iac.target.dev.consul:3306
 |=======================================================================================
 
 Credentials:
@@ -152,11 +152,11 @@ Credentials:
 RabbitMQ is the messaging broker for the services.
 
 |=======================================================================================
-| RPC           | rabbitmq.uas.nt:5672
-| RPC Consul    | rabbitmq.service.uas.nt.consul:5672
-| WebUI         | http://rabbitmq.uas.nt:15672
-| WebUI Consul  | http://rabbitmq-http.service.uas.nt.consul:15672
-| WebUI Traefik | http://rabbitmq-http.uas.nt.public
+| RPC           | rabbitmq.iac.target.dev:5672
+| RPC Consul    | rabbitmq.service.iac.target.dev.consul:5672
+| WebUI         | http://rabbitmq.iac.target.dev:15672
+| WebUI Consul  | http://rabbitmq-http.service.iac.target.dev.consul:15672
+| WebUI Traefik | http://rabbitmq-http.iac.target.dev.public
 |=======================================================================================
 
 Credentials:
